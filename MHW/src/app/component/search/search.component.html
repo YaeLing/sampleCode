@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="input -field col s6">
+    <label style="font-size: 1cm">暱稱</label>
+    <input type="text" [(ngModel)]="searchid" [ngModelOptions]="{standalone:true}" style="font-size: 1cm">
+      <button class="btn orange" (click)="searchAccount()" >Search</button>
+  </div>
+</div>
+
+
+
+<div *ngIf="accounts?.length > 0 && searchState==true ;else notAccount">
+    <ul *ngFor="let account of accounts" class="collection">
+        <div class="collection" style="font-size:1cm">
+            <li class="collection-item red-text text-darken-4"><strong>暱稱 :</strong> {{account.name}}</li>
+            <li class="collection-item red-text text-darken-4"><strong>電話 :</strong> {{account.phone}}</li>
+            <li class="collection-item red-text text-darken-4"><strong>LineID :</strong> {{account.lineid}}</li>
+            <li class="collection-item red-text text-darken-4"><strong>用戶組 :</strong> {{account.manage}}</li>
+          
+          </div>
+    </ul>
+ </div>
+ 
+ <ng-template #notAccount class="row">
+   <div *ngIf="searchState==true">
+     <hr>
+     <h2 class="col S6 offset-s4">查無此人</h2>
+   </div>
+ </ng-template>

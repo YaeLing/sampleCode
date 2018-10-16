@@ -1,0 +1,445 @@
+<!--
+  Generated template for the BookPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>訂房</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+    <ion-item><!--商業套房-->
+      <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E5%95%86%E6%A5%AD%E5%A5%97%E6%88%BF.jpg?alt=media&token=4f05f0d8-b539-4781-9aa6-f7d64dc2d4f2"
+        width="400" height="200">
+    <br>
+      <strong>商業套房</strong><br>
+      {{roomPrice.BusinessSuite}}/一晚&nbsp;&nbsp;現有:{{roomNum.BusinessSuite}}間<br>
+      <div *ngIf="user | async ; let user; else bookBusiness">
+        <div *ngIf="editState==false">
+            <button ion-button block (click)="edit('BusinessSuite')">編輯數量/價錢</button>
+        </div>
+        <div *ngIf="editState==true && editRoom=='BusinessSuite'">
+            <ion-list>
+              <ion-item>
+                <ion-label floating>房間數量</ion-label>
+                <ion-input type="text" [(ngModel)]="roomNum.BusinessSuite" name="editRoomNum" ></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>房間價格</ion-label>
+                <ion-input type="text" [(ngModel)]="roomPrice.BusinessSuite" name="editRoomPrice"></ion-input>
+              </ion-item>
+              <button ion-button round (click)="submitRoom()">修改</button>
+              <button ion-button round (click)="cancleEdit()">取消</button>
+            </ion-list>
+        </div>
+      </div>
+      <ng-template #bookBusiness>
+
+      <div *ngIf="bookState==false && roomNum.BusinessSuite>0">
+         <button ion-button block (click)="book('BusinessSuite')">訂房</button>
+      </div>
+      <div *ngIf="bookState==true && bookRoom=='BusinessSuite'">
+          <form (ngSubmit)="onSubmit('BusinessSuite')">
+            <ion-list>
+              <ion-item>
+                <ion-label floating>姓名</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.name" name="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>身分證字號</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.id" name="uid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>電話</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.phone" name="phone"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>間數</ion-label>
+                <ion-select [(ngModel)]="customer.num" name="num">  
+                  <ion-option value="1">1</ion-option>
+                    <div *ngIf="roomNum.BusinessSuite>1">
+                      <ion-option value="2">2</ion-option>
+                      <div *ngIf="roomNum.BusinessSuite>2">
+                          <ion-option value="3">3</ion-option>
+                          <div *ngIf="roomNum.BusinessSuite>3">
+                              <ion-option value="4">4</ion-option>
+                              <div *ngIf="roomNum.BusinessSuite>4">
+                                  <ion-option value="5">5</ion-option>
+                                  <div *ngIf="roomNum.BusinessSuite>5">
+                                      <ion-option value="6">6</ion-option>
+                                      <div *ngIf="roomNum.BusinessSuite>6">
+                                          <ion-option value="7">7</ion-option>
+                                          <div *ngIf="roomNum.BusinessSuite>7">
+                                              <ion-option value="8">8</ion-option>
+                                              <div *ngIf="roomNum.BusinessSuite>8">
+                                                  <ion-option value="9">9</ion-option>
+                                                  <div *ngIf="roomNum.BusinessSuite>9">
+                                                      <ion-option value="10">10</ion-option>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ion-select>
+              </ion-item>
+              </ion-list>
+              <button ion-button type="submit" round>確認</button>
+              <button ion-button  round (click)="cancle()">取消</button>
+        </form>
+      </div>
+      </ng-template>
+    </ion-item>
+    
+    <ion-item><!--家庭-->
+        <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E5%AE%B6%E5%BA%AD%E5%A5%97%E6%88%BF.jpg?alt=media&token=9d1699c4-4238-468f-ab3e-9009d0a186f2"
+          width="400" height="200">
+    <br>
+      <strong>家庭套房</strong><br>
+      {{roomPrice.FamilySuite}}/一晚&nbsp;&nbsp;現有:{{roomNum.FamilySuite}}間<br>
+      <div *ngIf="user | async ; let user; else bookFamily">
+          <div *ngIf="editState==false">
+              <button ion-button block (click)="edit('FamilySuite')">編輯房間數量</button>
+          </div>
+          <div *ngIf="editState==true && editRoom=='FamilySuite'">
+              <ion-list>
+                <ion-item>
+                  <ion-label floating>房間數量</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomNum.FamilySuite" name="editRoomNum" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>房間價格</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomPrice.FamilySuite" name="editRoomPrice"></ion-input>
+                </ion-item>
+                <button ion-button round (click)="submitRoom()">修改</button>
+                <button ion-button round (click)="cancleEdit()">取消</button>
+              </ion-list>
+          </div>
+        </div>
+        <ng-template #bookFamily>
+      <div *ngIf="bookState==false && roomNum.FamilySuite>0">
+        <button ion-button block (click)="book('FamilySuite')">訂房</button>
+      </div>
+      <div *ngIf="bookState==true && bookRoom=='FamilySuite'">
+          <form (ngSubmit)="onSubmit('FamilySuite')">
+            <ion-list>
+              <ion-item>
+                <ion-label floating>姓名</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.name" name="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>身分證字號</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.id" name="uid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>電話</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.phone" name="phone"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>間數</ion-label>
+                <ion-select [(ngModel)]="customer.num" name="num">  
+                  <ion-option value="1">1</ion-option>
+                    <div *ngIf="roomNum.FamilySuite>1">
+                      <ion-option value="2">2</ion-option>
+                      <div *ngIf="roomNum.FamilySuite>2">
+                          <ion-option value="3">3</ion-option>
+                          <div *ngIf="roomNum.FamilySuite>3">
+                              <ion-option value="4">4</ion-option>
+                              <div *ngIf="roomNum.FamilySuite>4">
+                                  <ion-option value="5">5</ion-option>
+                                  <div *ngIf="roomNum.FamilySuite>5">
+                                      <ion-option value="6">6</ion-option>
+                                      <div *ngIf="roomNum.FamilySuite>6">
+                                          <ion-option value="7">7</ion-option>
+                                          <div *ngIf="roomNum.FamilySuite>7">
+                                              <ion-option value="8">8</ion-option>
+                                              <div *ngIf="roomNum.FamilySuite>8">
+                                                  <ion-option value="9">9</ion-option>
+                                                  <div *ngIf="roomNum.FamilySuite>9">
+                                                      <ion-option value="10">10</ion-option>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ion-select>
+              </ion-item>
+              </ion-list>
+              <button ion-button type="submit" round>確認</button>
+              <button ion-button  round (click)="cancle()">取消</button>
+        </form>
+      </div> 
+    </ng-template>
+    </ion-item>
+  
+
+    <ion-item><!--總統-->
+          <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E7%B8%BD%E7%B5%B1%E5%A5%97%E6%88%BF.jpg?alt=media&token=7720431f-b944-4f7a-805a-ef0e927ea20c"
+            width="400" height="200">
+    <br>
+      <strong>總統套房</strong><br>
+      {{roomPrice.PresidentialSuite}}/一晚&nbsp;&nbsp;現有:{{roomNum.PresidentialSuite}}間<br>
+      <div *ngIf="user | async ; let user; else bookPresidential">
+          <div *ngIf="editState==false">
+              <button ion-button block (click)="edit('PresidentialSuite')">編輯房間數量</button>
+          </div>
+          <div *ngIf="editState==true && editRoom=='PresidentialSuite'">
+              <ion-list>
+                <ion-item>
+                  <ion-label floating>房間數量</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomNum.PresidentialSuite" name="editRoomNum" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>房間價格</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomPrice.PresidentialSuite" name="editRoomPrice"></ion-input>
+                </ion-item>
+                <button ion-button round (click)="submitRoom()">修改</button>
+                <button ion-button round (click)="cancleEdit()">取消</button>
+              </ion-list>
+          </div>
+        </div>
+        <ng-template #bookPresidential>
+      <div *ngIf="bookState==false && roomNum.PresidentialSuite>0">
+        <button ion-button block (click)="book('PresidentialSuite')">訂房</button>
+      </div>
+      <div *ngIf="bookState==true && bookRoom=='PresidentialSuite'">
+          <form (ngSubmit)="onSubmit('PresidentialSuite')">
+            <ion-list>
+              <ion-item>
+                <ion-label floating>姓名</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.name" name="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>身分證字號</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.id" name="uid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>電話</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.phone" name="phone"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>間數</ion-label>
+                <ion-select [(ngModel)]="customer.num" name="num">  
+                  <ion-option value="1">1</ion-option>
+                    <div *ngIf="roomNum.PresidentialSuite>1">
+                      <ion-option value="2">2</ion-option>
+                      <div *ngIf="roomNum.PresidentialSuite>2">
+                          <ion-option value="3">3</ion-option>
+                          <div *ngIf="roomNum.PresidentialSuite>3">
+                              <ion-option value="4">4</ion-option>
+                              <div *ngIf="roomNum.PresidentialSuite>4">
+                                  <ion-option value="5">5</ion-option>
+                                  <div *ngIf="roomNum.PresidentialSuite>5">
+                                      <ion-option value="6">6</ion-option>
+                                      <div *ngIf="roomNum.PresidentialSuite>6">
+                                          <ion-option value="7">7</ion-option>
+                                          <div *ngIf="roomNum.PresidentialSuite>7">
+                                              <ion-option value="8">8</ion-option>
+                                              <div *ngIf="roomNum.PresidentialSuite>8">
+                                                  <ion-option value="9">9</ion-option>
+                                                  <div *ngIf="roomNum.PresidentialSuite>9">
+                                                      <ion-option value="10">10</ion-option>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ion-select>
+              </ion-item>
+              </ion-list>
+              <button ion-button type="submit" round>確認</button>
+              <button ion-button  round (click)="cancle()">取消</button>
+        </form>
+      </div>
+      </ng-template>
+    </ion-item>
+
+    <ion-item><!--蜜月-->
+        <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E8%9C%9C%E6%9C%88%E5%A5%97%E6%88%BF.jpg?alt=media&token=279d4da5-7445-4020-a8e9-d1f17ee1f2e7"
+          width="400" height="200">
+    <br>
+      <strong>蜜月套房</strong><br>
+      {{roomPrice.HoneymoonSuite}}/一晚&nbsp;&nbsp;現有:{{roomNum.HoneymoonSuite}}間<br>
+      <div *ngIf="user | async ; let user; else bookHoneymoon">
+          <div *ngIf="editState==false">
+              <button ion-button block (click)="edit('HoneymoonSuite')">編輯房間數量</button>
+          </div>
+          <div *ngIf="editState==true && editRoom=='HoneymoonSuite'">
+              <ion-list>
+                <ion-item>
+                  <ion-label floating>房間數量</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomNum.HoneymoonSuite" name="editRoomNum" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>房間價格</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomPrice.HoneymoonSuite" name="editRoomPrice"></ion-input>
+                </ion-item>
+                <button ion-button round (click)="submitRoom()">修改</button>
+                <button ion-button round (click)="cancleEdit()">取消</button>
+              </ion-list>
+          </div>
+        </div>
+        <ng-template #bookHoneymoon>
+      <div *ngIf="bookState==false && roomNum.HoneymoonSuite>0">
+        <button ion-button block (click)="book('HoneymoonSuite')">訂房</button>
+      </div>
+      <div *ngIf="bookState==true && bookRoom=='HoneymoonSuite'">
+          <form (ngSubmit)="onSubmit('HoneymoonSuite')">
+            <ion-list>
+              <ion-item>
+                <ion-label floating>姓名</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.name" name="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>身分證字號</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.id" name="uid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>電話</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.phone" name="phone"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>間數</ion-label>
+                <ion-select [(ngModel)]="customer.num" name="num">  
+                  <ion-option value="1">1</ion-option>
+                    <div *ngIf="roomNum.HoneymoonSuite>1">
+                      <ion-option value="2">2</ion-option>
+                      <div *ngIf="roomNum.HoneymoonSuite>2">
+                          <ion-option value="3">3</ion-option>
+                          <div *ngIf="roomNum.HoneymoonSuite>3">
+                              <ion-option value="4">4</ion-option>
+                              <div *ngIf="roomNum.HoneymoonSuite>4">
+                                  <ion-option value="5">5</ion-option>
+                                  <div *ngIf="roomNum.HoneymoonSuite>5">
+                                      <ion-option value="6">6</ion-option>
+                                      <div *ngIf="roomNum.HoneymoonSuite>6">
+                                          <ion-option value="7">7</ion-option>
+                                          <div *ngIf="roomNum.HoneymoonSuite>7">
+                                              <ion-option value="8">8</ion-option>
+                                              <div *ngIf="roomNum.HoneymoonSuite>8">
+                                                  <ion-option value="9">9</ion-option>
+                                                  <div *ngIf="roomNum.HoneymoonSuite>9">
+                                                      <ion-option value="10">10</ion-option>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ion-select>
+              </ion-item>
+              </ion-list>
+              <button ion-button type="submit" round>確認</button>
+              <button ion-button  round (click)="cancle()">取消</button>
+        </form>
+      </div>
+      </ng-template>
+    </ion-item>
+
+    <ion-item><!--豪華-->
+        <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E8%B1%AA%E8%8F%AF%E5%A5%97%E6%88%BF.jpg?alt=media&token=9175fe14-a511-499b-ad20-bcbf3ee8cb54"
+          width="400" height="200">
+    <br>
+      <strong>豪華套房</strong><br>
+      {{roomPrice.LuxurySuite}}/一晚&nbsp;&nbsp;現有:{{roomNum.LuxurySuite}}間<br>
+      <div *ngIf="user | async ; let user; else bookLuxury">
+          <div *ngIf="editState==false">
+              <button ion-button block (click)="edit('LuxurySuite')">編輯房間數量</button>
+          </div>
+          <div *ngIf="editState==true && editRoom=='LuxurySuite'">
+              <ion-list>
+                <ion-item>
+                  <ion-label floating>房間數量</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomNum.LuxurySuite" name="editRoomNum" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>房間價格</ion-label>
+                  <ion-input type="text" [(ngModel)]="roomPrice.LuxurySuite" name="editRoomPrice"></ion-input>
+                </ion-item>
+                <button ion-button round (click)="submitRoom()">修改</button>
+                <button ion-button round (click)="cancleEdit()">取消</button>
+              </ion-list>
+          </div>
+        </div>
+        <ng-template #bookLuxury>
+      <div *ngIf="bookState==false && roomNum.LuxurySuite>0">
+        <button ion-button block (click)="book('LuxurySuite')">訂房</button>
+      </div>
+      <div *ngIf="bookState==true && bookRoom=='LuxurySuite'">
+          <form (ngSubmit)="onSubmit('LuxurySuite')">
+            <ion-list>
+              <ion-item>
+                <ion-label floating>姓名</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.name" name="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>身分證字號</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.id" name="uid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>電話</ion-label>
+                <ion-input type="text" [(ngModel)]="customer.phone" name="phone"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>間數</ion-label>
+                <ion-select [(ngModel)]="customer.num" name="num">  
+                  <ion-option value="1">1</ion-option>
+                    <div *ngIf=" roomNum.LuxurySuite>1">
+                      <ion-option value="2">2</ion-option>
+                      <div *ngIf=" roomNum.LuxurySuite>2">
+                          <ion-option value="3">3</ion-option>
+                          <div *ngIf=" roomNum.LuxurySuite>3">
+                              <ion-option value="4">4</ion-option>
+                              <div *ngIf=" roomNum.LuxurySuite>4">
+                                  <ion-option value="5">5</ion-option>
+                                  <div *ngIf=" roomNum.LuxurySuite>5">
+                                      <ion-option value="6">6</ion-option>
+                                      <div *ngIf=" roomNum.LuxurySuite>6">
+                                          <ion-option value="7">7</ion-option>
+                                          <div *ngIf=" roomNum.LuxurySuite>7">
+                                              <ion-option value="8">8</ion-option>
+                                              <div *ngIf=" roomNum.LuxurySuite>8">
+                                                  <ion-option value="9">9</ion-option>
+                                                  <div *ngIf=" roomNum.LuxurySuite>9">
+                                                      <ion-option value="10">10</ion-option>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ion-select>
+              </ion-item>
+              </ion-list>
+              <button ion-button type="submit" round>確認</button>
+              <button ion-button  round (click)="cancle()">取消</button>
+        </form>
+      </div>
+      </ng-template>
+    </ion-item>
+</ion-content>

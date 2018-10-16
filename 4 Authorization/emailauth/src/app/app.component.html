@@ -1,0 +1,16 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div *ngIf ="afAuth.authState | async;let user; else showLogin" >
+    <h1>Hello{{user.uid}}</h1>
+    <button (click)="logout()">Logout</button>
+</div>
+
+<ng-template #showLogin>
+  帳號<input type=text [(ngModel)]="email" placeholder="email"><br>
+  密碼<input type=password [(ngModel)]="password" ><br>
+
+  <button (click)="register(email,password)">註冊</button>
+  <button (click)="login(email,password)">登入</button>
+
+</ng-template>
+

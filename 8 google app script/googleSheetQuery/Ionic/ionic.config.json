@@ -1,0 +1,7 @@
+{
+  "name": "googleSheetQuery",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

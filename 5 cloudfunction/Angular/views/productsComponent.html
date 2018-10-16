@@ -1,0 +1,159 @@
+<section id="section_product">
+    <h2>商品管理</h2>
+    <div style="text-align:center" *ngIf="(account)?.role == 'customer' && buyMessageVisible">
+        <span *ngIf="time">《好久不見》，距離您上次購買[{{(selectedProduct)?.name}}]，已經<{{time}}></span>
+    </div>
+    <div *ngIf="(account)?.role == 'manager'" class="input-group">
+        <form class="form-inline my-2 my-lg-0">
+            <span class="input-group-addon" id="basic-addon1">序號</span>
+            <input type="number" [(ngModel)]="newProduct.id" [ngModelOptions]="{standalone: true}" class="form-control" />
+            <span class="input-group-addon" id="basic-addon1">類別</span>
+            <input type="string" [(ngModel)]="newProduct.category" [ngModelOptions]="{standalone: true}" class="form-control" />
+            <span class="input-group-addon" id="basic-addon1">商品</span>
+            <input type="text" [(ngModel)]="newProduct.name" [ngModelOptions]="{standalone: true}" class="form-control" />
+
+            <button type="submit" (click)="addProduct()" class="btn btn-default">新增</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover" id="productTable">
+        <tr>
+            <th>序號</th>
+            <th>類別</th>
+            <th>商品</th>
+            <th>價格</th>
+            <th *ngIf="account != null && account.role != 'manager'">功能</th>
+            <th *ngIf="account != null && account.role == 'manager'">
+                <button class="btn btn-info" style="position: relative;">匯入商品
+                    <input class="file" type="file" (change)="importProductsByFile($event)" accept=".json">
+                </button>
+            </th>
+        </tr>
+        <ng-container *ngFor="let product of products | async">
+            <tr *ngIf="product != undefined">
+                <td>{{product.id}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td style="text-align:left;" *ngIf="account != null">
+                    <ng-container *ngIf="(account)?.role == 'manager' || (account)?.role == 'staff'">
+                        <button type="button" *ngIf="product.price != null" (click)="increasePrice(product)" class="btn btn-danger">漲價</button>
+                        <button type="button" *ngIf="product.price != null" (click)="decreasePrice(product)" class="btn btn-success">減價</button>
+
+                        <button type="button" *ngIf="(account)?.role != 'customer' && (!saleRecordVisible || (selectedProduct)?.$key != product.$key)"
+                            (click)="showSaleRecords(product)" class="btn btn-info">銷售記錄</button>
+                        <button type="button" *ngIf="(account)?.role != 'customer' && saleRecordVisible && (selectedProduct)?.$key == product.$key"
+                            (click)="hideSaleRecords()" class="btn btn-secondary">隱藏</button>
+
+                        <button type="button" *ngIf="(account)?.role == 'manager'" (click)="removeProduct(product)" class="btn btn-warning">下架</button>
+                    </ng-container>
+                    <ng-container *ngIf="(account)?.role == 'customer'">
+                        <button type="button" *ngIf="product.price != null" (click)="buy(product)" class="btn btn-success">購買</button>
+                    </ng-container>
+
+                </td>
+            </tr>
+        </ng-container>
+
+        <tr>
+            <td *ngIf="(products | async)?.length == 0" style="height: auto;" colspan="7">
+                無商品資料
+            </td>
+        </tr>
+    </table>
+
+</section>
+
+<section id="section_records" *ngIf="priceRecordVisible">
+    <h2>價格記錄</h2>
+    <table class="table table-bordered table-hover" id="recordTable">
+        <tr>
+            <td colspan="5">
+                <span class="col-md-4">序號: {{selectedProduct?.id}} </span>
+                <span class="col-md-4">商品: {{selectedProduct?.name}} </span>
+                <span class="col-md-4">價格: {{selectedProduct?.price}} </span>
+            </td>
+        </tr>
+        <tr>
+            <th>時間</th>
+            <th>原價</th>
+            <th>調整</th>
+            <th>價格</th>
+        </tr>
+        <ng-container *ngFor="let priceRecord of priceRecords | async">
+            <tr *ngIf="priceRecord != undefined ">
+                <td>{{priceRecord.timeStamp | date:'y/MM/dd HH:mm:ss'}}</td>
+                <td>{{priceRecord.oldPrice}}</td>
+                <td>{{priceRecord.changeAmount}}</td>
+                <td>{{priceRecord.newPrice}}</td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td *ngIf="(priceRecords | async)?.length == 0" style="height: auto;" colspan="5">
+                無商品記錄
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section id="section_records" *ngIf="saleRecordVisible">
+    <h2>銷售記錄</h2>
+    <table class="table table-bordered table-hover" id="recordTable">
+        <tr>
+            <td colspan="5">
+                <span class="col-md-4">商品: {{selectedProduct.name}} </span>
+                <span class="col-md-4">總數: {{saleRecordsCount}} </span>
+                <span class="col-md-4">總額: {{saleRecordSum}} </span>
+            </td>
+        </tr>
+        <tr>
+            <th>時間</th>
+            <th>購買人</th>
+            <th>價格</th>
+        </tr>
+        <ng-container *ngFor="let saleRecord of saleRecords | async">
+            <tr *ngIf="saleRecord != undefined ">
+                <td>{{saleRecord.timeStamp | date:'y/MM/dd HH:mm:ss'}}</td>
+                <td>{{saleRecord.accountName}}</td>
+                <td>{{saleRecord.productPrice}}</td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td *ngIf="(saleRecords | async)?.length == 0" style="height: auto;" colspan="5">
+                無銷售記錄
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section id="section_records" *ngIf="buyRecordVisible">
+    <h2>採購記錄</h2>
+    <table class="table table-bordered table-hover" id="recordTable">
+        <tr>
+            <td colspan="5">
+                <span class="col-md-4">購買人: {{(account)?.name}} </span>
+                <span class="col-md-4">總數: {{buyRecordsCount}} </span>
+                <span class="col-md-4">總額: {{buyRecordSum}} </span>
+            </td>
+        </tr>
+        <tr>
+            <th>時間</th>
+            <th>商品</th>
+            <th>價格</th>
+        </tr>
+        <ng-container *ngFor="let buyRecord of buyRecords | async">
+            <tr *ngIf="buyRecord != undefined ">
+                <td>{{buyRecord.timeStamp | date:'y/MM/dd HH:mm:ss'}}</td>
+                <td>{{buyRecord.productName}}</td>
+                <td>{{buyRecord.productPrice}}</td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td *ngIf="(buyRecords | async)?.length == 0" style="height: auto;" colspan="5">
+                無採購記錄
+            </td>
+        </tr>
+    </table>
+</section>

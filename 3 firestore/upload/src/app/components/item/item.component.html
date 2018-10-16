@@ -1,0 +1,37 @@
+<div *ngIf="items?.length > 0;else notItem">
+   <ul *ngFor="let item of items" class="collection">
+        <li  class="collection-item"><strong>{{item.title}} : </strong> {{item.description}}
+        <a href="#" class="secondary-content">
+        <i (click)="editItem($event,item)" class="fa fa-pencil"></i>
+        <a *ngIf="editState && itemToEdit.id==item.id">&nbsp;&nbsp; <i  (click)="clearState()" class="fa fa-compress"></i></a>
+       
+ 
+        </a>
+
+        <div *ngIf="editState && itemToEdit.id == item.id">
+            <form (ngSubmit)="updateItem(item)">
+                    <div class="row">
+                        <div class="input -field col s6">
+                            <input type="text" placeholder="Add title" [(ngModel)]="item.title" [ngModelOptions]="{standalone : true}">
+                            <label>title</label>
+                        </div>
+                        <div class="input -field col s6">
+                            <input type="text" placeholder="Add description" [(ngModel)]="item.description" [ngModelOptions]="{standalone :true}">
+                                                                             <!這裡是可以讓填入的地方顯示原本的數值>
+                            <label>description</label>
+                        </div>
+                            <input type="submit" value="Upgrade Item" class="btn orange" >
+                            <a href="#" class="secondary-content">
+                            <button class="btn red" (click)="deleteItem(item)">delete</button>
+                            </a>
+                    </div>        
+            </form> 
+        </div>
+        </li>
+   </ul>
+</div>
+
+<ng-template #noItem>
+<hr>
+<h5>There are no items to list</h5>
+</ng-template>

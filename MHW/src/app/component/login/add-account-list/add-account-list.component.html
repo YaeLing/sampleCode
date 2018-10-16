@@ -1,0 +1,31 @@
+<div *ngIf="listState==false ; else succ">
+  <form (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="input -field col s12"> 
+            <label><font size="15">暱稱</font></label>
+            <input type="text" placeholder="暱稱" [(ngModel)]="account.name" [ngModelOptions]="{standalone : true}" style="font-size:1cm">
+           
+          </div>
+          <br>
+          <div class="input -field col s12">                          
+              <label><font size="15">電話</font></label>
+              <input type="text" placeholder="電話" [(ngModel)]="account.phone" [ngModelOptions]="{standalone :true}" style="font-size:1cm">
+                                 
+          </div>
+          <div class="input -field col s12">
+               <label><font size="15">LineID</font></label>
+               <input type="text" placeholder="LineID" [(ngModel)]="account.lineid" [ngModelOptions]="{standalone :true}" style="font-size:1cm">
+          </div>
+          
+              <a href="#" class="secondary-content">
+              <input type="submit" class="btn orange" value="confirm">
+              </a>
+       </div>        
+   </form> 
+</div>
+<ng-template #succ>
+  <div class="row">
+    <h2 class="col s6 offset-s4">填寫完成</h2>
+  
+  </div>
+</ng-template>

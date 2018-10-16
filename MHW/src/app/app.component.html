@@ -1,0 +1,36 @@
+<div class="container" >
+  <div class="card-panel blue-grey darken-3">
+    <div class="card-panel blue lighten-5" style="text-align:center;font-size: 500%" >
+        <span class="red-text text-darken-2" font size="6">Monster Hunter World</span>       
+    </div>
+  </div>
+    <!-- Page Layout here -->
+    <div class="row">
+
+        <div class="col s3" >
+         <nav>
+            <div *ngIf="afAuth.authState | async; let user; else showLogin" >
+                <h2 class="card-panel teal lighten-2">歡迎回來 <button class="btn red" (click)="logout()">登出</button></h2>
+                
+                <h2 routerLink="/lobby" routerLinkActive="active" class="card-panel teal lighten-2">獵人大廳</h2>
+                <h2 routerLink="/search" routerLinkActive="active" class="card-panel teal lighten-2">獵人搜尋</h2>
+                <h2 routerLink="/account" routerLinkActive="active" class="card-panel teal lighten-2">獵人資訊</h2>
+                 <h2 routerLink="/party" routerLinkActive="active" class="card-panel teal lighten-2">組隊狩獵</h2>
+                 
+            </div>
+            <ng-template #showLogin>
+                
+             <h2 routerLink="/login" routerLinkActive="active" class="card-panel teal lighten-2">Login</h2>
+            </ng-template>
+            
+          </nav>
+        </div>
+  
+        <div class="col s9">
+          <router-outlet></router-outlet>
+        </div>
+  
+      </div>
+  
+ 
+</div>

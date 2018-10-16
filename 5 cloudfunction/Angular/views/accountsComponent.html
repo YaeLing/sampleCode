@@ -1,0 +1,206 @@
+<ng-container>
+    <section id="section_user">
+        <h2>社群精準行銷</h2>
+        <div style="text-align:center" *ngIf="(loggedAccount)?.role == 'customer' && balanceMessageVisible">
+            <span *ngIf="time">《好久不見》，距離您上次[加值]，已經<{{time}}></span>
+        </div>
+        <table class="table table-bordered table-hover" id="userTable">
+            <tr>
+                <th [width]="(loggedAccount)?.role == 'customer'? '18.9%': '21.9%'">序號</th>
+                <th [width]="(loggedAccount)?.role == 'customer'? '7.39%':(loggedAccount)?.role == 'manager'?'9.39%': '13.39%'">姓名</th>
+                <th width="13.86%">電話</th>
+                <th width="19.78%">郵件</th>
+                <th width="7.6%">身份</th>
+                <th *ngIf="(loggedAccount)?.role != 'manager'" [width]="(loggedAccount)?.role == 'customer'? '32.47%': '23.47%'">
+                    功能
+                </th>
+                <th *ngIf="(loggedAccount)?.role == 'manager'" [width]="'27.47%'">
+                    <button class="btn btn-info" style="position: relative;">匯入成員
+                        <input class="file" type="file" (change)="importAccountsByFile($event)" accept=".csv">
+                    </button>
+                </th>
+            </tr>
+            <ng-container *ngFor="let account of accounts | async">
+                <tr *ngIf="account != undefined">
+                    <td>{{account.firebaseId}}</td>
+                    <td>{{account.name}}</td>
+                    <td>{{account.phone}}</td>
+                    <td>{{account.email}}</td>
+                    <td>{{account.role == "manager"? "經理": account.role == "staff"? "店員": "顧客"}}</td>
+                    <td style="text-align:left;white-space:nowrap;">
+                        <button type="button" *ngIf="account.role == 'customer' && (loggedAccount)?.firebaseId == account.firebaseId" (click)="showIncreaseBalanceForm(account)"
+                            class="btn btn-info">加值</button>
+                        <button type="button" (click)="getAccountDetail(account)" class="btn btn-info">修改</button>
+
+                        <button type="button" *ngIf="account.role == 'customer' && (!buyRecordVisible || (selectedAccount)?.firebaseId != account.firebaseId)"
+                            (click)="showBuyRecords(account)" class="btn btn-info">採購記錄</button>
+                        <button type="button" *ngIf="account.role == 'customer' && buyRecordVisible && (selectedAccount)?.firebaseId == account.firebaseId"
+                            (click)="hideBuyRecords()" class="btn btn-secondary">隱藏</button>
+
+                        <button type="button" *ngIf="account.role == 'customer' && (!balanceRecordVisible || (selectedAccount)?.firebaseId != account.firebaseId)"
+                            (click)="showBalanceRecords(account)" class="btn btn-info">交易紀錄</button>
+                        <button type="button" *ngIf="account.role == 'customer' && balanceRecordVisible && (selectedAccount)?.firebaseId == account.firebaseId"
+                            (click)="hideBalanceRecords()" class="btn btn-secondary">隱藏</button>
+
+                        <button type="button" *ngIf="((loggedAccount).role == 'manager' || (loggedAccount)?.firebaseId == account.firebaseId) && account.role == 'customer'"
+                            (click)="showDeleteForm(account)" class="btn btn-warning">結清</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+    </section>
+
+    <section id="section_detailAccount" *ngIf="detailVisible">
+        <div id="accountdetail">
+            <h2>成員修改</h2>
+            <form>
+                <div class="form-group row">
+                    <label for="inputName" class="col-sm-2 col-form-label">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" [(ngModel)]="accountDetail.name" [ngModelOptions]="{standalone: true}" class="form-control" id="inputName"
+                            placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPhone" class="col-sm-2 col-form-label">電話</label>
+                    <div class="col-sm-10">
+                        <input type="text" [(ngModel)]="accountDetail.phone" [ngModelOptions]="{standalone: true}" class="form-control" id="inputPhone"
+                            placeholder="電話號碼">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">郵件</label>
+                    <div class="col-sm-10">
+                        <input type="email" [(ngModel)]="accountDetail.email" [ngModelOptions]="{standalone: true}" class="form-control" id="inputEmail"
+                            placeholder="email@example.com">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="staticRole" class="col-sm-2 col-form-label">身份</label>
+                    <div class="col-sm-8"> {{accountDetail.role == "manager"? "經理": accountDetail.role == "staff"? "店員": "顧客"}} </div>
+                </div>
+                <div class="form-group row">
+                    <label for="staticFirebaseId" class="col-sm-4 col-form-label">Firebase ID</label>
+                    <div class="col-sm-8"> {{accountDetail.firebaseId}} </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" (click)="updateAccount(accountDetail)">確認</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg" (click)="hideAccountDetail()">取消</button>
+            </form>
+        </div>
+    </section>
+
+</ng-container>
+
+
+<section id="section_records" *ngIf="buyRecordVisible">
+    <h2>採購記錄</h2>
+    <table class="table table-bordered table-hover" id="recordTable">
+        <tr>
+            <td colspan="5">
+                <span class="col-md-4">購買人: {{selectedAccount.name}} </span>
+                <span class="col-md-4">總數: {{buyRecordsCount}} </span>
+                <span class="col-md-4">總額: {{buyRecordSum}} </span>
+            </td>
+        </tr>
+        <tr>
+            <th>時間</th>
+            <th>商品</th>
+            <th>價格</th>
+        </tr>
+        <ng-container *ngFor="let buyRecord of buyRecords | async">
+            <tr *ngIf="buyRecord != undefined ">
+                <td>{{buyRecord.timeStamp | date:'y/MM/dd HH:mm:ss'}}</td>
+                <td>{{buyRecord.productName}}</td>
+                <td>{{buyRecord.productPrice}}</td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td *ngIf="(buyRecords | async)?.length == 0" style="height: auto;" colspan="5">
+                無採購記錄
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section id="section_detailAccount" *ngIf="increaseBalanceVisible">
+    <div id="accountdetail">
+        <h2>帳戶加值</h2>
+        <form>
+            <div class="form-group row">
+                <label for="staticName" class="col-sm-2 col-form-label">姓名</label>
+                <div class="col-sm-10"> {{accountDetail.name}} </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="staticBalance" class="col-sm-2 col-form-label">餘額</label>
+                <div class="col-sm-10"> {{accountDetail.balance}} </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputCharge" class="col-sm-2 col-form-label">加值</label>
+                <div class="col-sm-10">
+                    <input type="number" [(ngModel)]="changeAmount" [ngModelOptions]="{standalone: true}" class="form-control" id="inputCharge"
+                        placeholder="金額">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" (click)="increaseBalance(accountDetail, changeAmount)">加值</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg" (click)="hideAccountDetail()">取消</button>
+        </form>
+    </div>
+</section>
+
+<section id="section_records" *ngIf="balanceRecordVisible">
+    <h2>交易記錄</h2>
+    <table class="table table-bordered table-hover" id="recordTable">
+        <tr>
+            <td colspan="5">
+                <span class="col-md-4">姓名: {{selectedAccount.name}} </span>
+                <span class="col-md-4">總數: {{balanceRecordsCount}} </span>
+                <span class="col-md-4">總額: {{balanceRecordSum}} </span>
+            </td>
+        </tr>
+        <tr>
+            <th>時間</th>
+            <th>前期</th>
+            <th>金額</th>
+            <th>餘額</th>
+            <th>商品</th>
+        </tr>
+        <ng-container *ngFor="let balanceRecord of balanceRecords | async">
+            <tr *ngIf="balanceRecord != undefined ">
+                <td>{{balanceRecord.timeStamp | date:'y/MM/dd HH:mm:ss'}}</td>
+                <td>{{balanceRecord.oldBalance}}</td>
+                <td>{{balanceRecord.changeAmount}}</td>
+                <td>{{balanceRecord.newBalance}}</td>
+                <td>{{balanceRecord.productName == undefined?"儲值":balanceRecord.productName}}</td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td *ngIf="(balanceRecords | async)?.length == 0" style="height: auto;" colspan="5">
+                無交易記錄
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section id="section_detailAccount" *ngIf="deleteVisible">
+    <div id="accountdetail">
+        <h2>帳戶結清</h2>
+        <form>
+            <div class="form-group row">
+                <label for="staticName" class="col-sm-2 col-form-label">姓名</label>
+                <div class="col-sm-10"> {{accountDetail.name}} </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="staticBalance" class="col-sm-2 col-form-label">餘額</label>
+                <div class="col-sm-10"> {{accountDetail.balance}} </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" (click)="deleteAccount(accountDetail)">結清</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg" (click)="hideAccountDetail()">取消</button>
+        </form>
+    </div>
+</section>

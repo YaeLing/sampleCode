@@ -1,0 +1,38 @@
+<div *ngIf="editState==false ; else showEdit">
+  <div class="collection" style="font-size:1cm">
+    <a href="/account"  class="collection-item red-text text-darken-4"><strong>暱稱 :</strong> {{account.name}}</a>
+    <a href="/account"  class="collection-item red-text text-darken-4"><strong>電話 :</strong> {{account.phone}}</a>
+    <a href="/account" class="collection-item red-text text-darken-4"><strong>LineID :</strong> {{account.lineid}}</a>
+    <a href="/account" class="collection-item red-text text-darken-4"><strong>用戶組 :</strong> {{account.manage}}</a>
+  
+  </div>
+  <div class="row">
+    <button class="btn orange col s2 offset-s9" (click)="editAccount()">edit</button>
+  </div>
+</div>
+
+<ng-template #showEdit>
+    <form (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="input -field col s12"> 
+                <label><font size="15">暱稱</font></label>
+                <input type="text" placeholder="暱稱" [(ngModel)]="account.name" [ngModelOptions]="{standalone : true}" style="font-size:1cm">
+               
+              </div>
+              <br>
+              <div class="input -field col s12">                          
+                  <label><font size="15">電話</font></label>
+                  <input type="text" placeholder="電話" [(ngModel)]="account.phone" [ngModelOptions]="{standalone :true}" style="font-size:1cm">
+                                     
+              </div>
+              <div class="input -field col s12">
+                   <label><font size="15">LineID</font></label>
+                   <input type="text" placeholder="LineID" [(ngModel)]="account.lineid" [ngModelOptions]="{standalone :true}" style="font-size:1cm">
+              </div>
+              
+                  <a href="#" class="secondary-content">
+                  <input type="submit" class="btn orange" value="confirm">
+                  </a>
+           </div>        
+       </form> 
+</ng-template>

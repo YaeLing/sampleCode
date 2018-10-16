@@ -1,0 +1,19 @@
+<div *ngIf="messages?.length >0" style="width:600px;height:780px;overflow-x: hidden;overflow-y: auto">
+  <ul *ngFor="let message of messages" class="collection">
+    <li class="collection-item" style="font-size :1cm"><strong>{{message.sender}} :</strong>{{message.message}}
+      <a class=secondary-content><font style="font-size: 0.25cm">{{message.time}}</font></a>
+    </li>
+  </ul>
+</div>
+<div class="row">
+  <div class="input -field col s12">
+     <input style="font-size: 1.15cm" type="text" placeholder="Message" [(ngModel)]="messageSend" [ngModelOptions]="{standalone :true}">
+     
+  </div>
+     <a class="col s2 offset-s10">
+          <button (click)="sendMessage()" class="btn" style="font-size: 0.75cm">Send</button>
+     </a>
+  
+</div>
+
+        

@@ -1,0 +1,134 @@
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>房間管理</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="user | async ; let user; else notlog">
+    <div *ngIf="BusinessSuites?.length > 0">
+     <h2>商業套房</h2>
+     <ion-list>
+       <table style="width:100%">
+         <tr>
+           <th>姓名</th>
+           <th>電話</th>
+           <th>房數</th>
+           <th>身分證字號</th>
+           <th></th>
+         </tr>
+         
+         <tr *ngFor="let BusinessSuite of BusinessSuites" >
+           <td>{{BusinessSuite.name}}</td>
+           <td>{{BusinessSuite.phone}}</td>
+           <td>{{BusinessSuite.num}}</td>
+           <td>{{BusinessSuite.id}}</td>
+           <td><button ion-button round (click)="checkOut(BusinessSuite)">退房</button></td>
+         </tr>
+        </table> 
+      </ion-list>
+   </div>
+
+   <div *ngIf="FamilySuites?.length > 0">
+      <h2>家庭套房</h2>
+      <ion-list>
+        <table style="width:100%">
+          <tr>
+            <th>姓名</th>
+            <th>電話</th>
+            <th>房數</th>
+            <th>身分證字號</th>
+            <th></th>
+          </tr>
+          
+          <tr *ngFor="let FamilySuite of FamilySuites">
+            <td>{{FamilySuite.name}}</td>
+            <td>{{FamilySuite.phone}}</td>
+            <td>{{FamilySuite.num}}</td>
+            <td>{{FamilySuite.id}}</td>
+            <td><button ion-button round (click)="checkOut(FamilySuite)">退房</button></td>
+          </tr>
+         </table> 
+       </ion-list>
+    </div>
+
+   <div *ngIf="HoneymoonSuites?.length > 0">
+      <h2>蜜月套房</h2>
+      <ion-list>
+        <table style="width:100%">
+          <tr>
+            <th>姓名</th>
+            <th>電話</th>
+            <th>房數</th>
+            <th>身分證字號</th>
+            <th></th>
+          </tr>
+            
+          <tr *ngFor="let HoneymoonSuite of HoneymoonSuites">
+            <td>{{HoneymoonSuite.name}}</td>
+            <td>{{HoneymoonSuite.phone}}</td>
+            <td>{{HoneymoonSuite.num}}</td>
+            <td>{{HoneymoonSuite.id}}</td>
+            <td><button ion-button round (click)="checkOut(HoneymoonSuite)">退房</button></td>
+          </tr>
+        </table> 
+      </ion-list>
+    </div>
+
+    <div *ngIf="LuxurySuites?.length > 0">
+      <h2>豪華套房</h2>
+        <ion-list>
+          <table style="width:100%">
+            <tr>
+              <th>姓名</th>
+              <th>電話</th>
+              <th>房數</th>
+              <th>身分證字號</th>
+              <th></th>
+            </tr>
+              
+            <tr *ngFor="let LuxurySuite of LuxurySuites">
+              <td>{{LuxurySuite.name}}</td>
+              <td>{{LuxurySuite.phone}}</td>
+              <td>{{LuxurySuite.num}}</td>
+              <td>{{LuxurySuite.id}}</td>
+              <td><button ion-button round (click)="checkOut(LuxurySuite)">退房</button></td>
+            </tr>
+          </table> 
+        </ion-list>
+      </div>
+
+    <div *ngIf="PresidentialSuites?.length > 0">
+      <h2>總統套房</h2>
+        <ion-list>
+          <table style="width:100%">
+            <tr>
+              <th>姓名</th>
+              <th>電話</th>
+              <th>房數</th>
+              <th>身分證字號</th>
+              <th></th>
+            </tr>
+                  
+            <tr *ngFor="let PresidentialSuite of PresidentialSuites">
+              <td>{{PresidentialSuite.name}}</td>
+              <td>{{PresidentialSuite.phone}}</td>
+              <td>{{PresidentialSuite.num}}</td>
+              <td>{{PresidentialSuite.id}}</td>
+              <td><button ion-button round (click)="checkOut(PresidentialSuite)">退房</button></td>
+            </tr>
+          </table> 
+        </ion-list>
+      </div>
+     </div>
+     
+     <ng-template #notlog>
+       <h2>需要管理員先登入</h2>
+     </ng-template>
+    
+</ion-content>

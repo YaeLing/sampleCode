@@ -1,0 +1,107 @@
+1. 建立Agent
+
+至 https://console.dialogflow.com/api-client/#/login並登入
+點選左上方有個設定圖示旁邊的倒三角
+點選「Create new agent」
+填寫Agent name、Language、Project...
+
+2. 建立Entities
+
+class: 上課 教室 課程
+practice: 實習 程式設計 讀書 程式
+report: 報告 作業 心得
+attend: 簽到 報到 來 到
+begin: 開始
+end: 結束 完成
+submit: 繳交 上傳
+
+3. 建立Intent
+
+AttendClass:
+上課簽到
+簽到上課
+我來上課
+我已經到教室
+
+BeginPractice:
+開始實習
+實習開始
+開始程式設計
+我已經開始讀書
+
+EndPractice:
+實習結束
+結束實習
+我已經設計好程式
+
+SubmitReport:
+繳交報告
+報告繳交
+我要上傳報告
+
+4. 設定回應樣板訊息
+
+AttendClass:
+簽到成功
+
+簽到時間：{{{attendTime}}}
+簽到次數：{{{attendCount}}}
+
+BeginPractice:
+實習開始
+開始時間：{{{beginTime}}}
+
+EndPractice:
+實習結束
+
+實習次數：{{{practiceCount}}}
+
+開始時間：{{{beginTime}}}
+結束時間：{{{endTime}}}
+
+本次實習：{{{practiceTime}}}
+累計時間：{{{totalPracticeTime}}}
+
+SubmitReport:
+請上傳報告影本
+
+Fall back:
+您所說的......
+{{{message}}}
+不是智能學堂的指令
+
+您所說的......
+{{{{message}}}}
+不是智能學堂的指令
+
+5. 設定action
+
+attendClass
+beginPractice
+endPractice
+requestReport
+
+6. Follow up
+
+在SubmitReport的Intent 「Add follow-up intent」
+新增yes、no的Follow-up
+
+設定yes的response text、action
+繳交報告
+
+繳交時間：{{{submitTime}}}
+繳交次數：{{{submitCount}}}
+
+submittedReport
+
+設定no的response text、action
+尚未繳交報告
+notSubmittedReport
+
+7. 修改chatbotConfig.ts
+
+8. 本地端測試
+
+npm run serve
+利用ngrok工具 ngrok http 5000
+至https://developers.line.me/console/ 修改Webhook URL

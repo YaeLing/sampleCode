@@ -1,0 +1,19 @@
+<div class="collection" style="font-size:1cm">
+    <li class="collection-item red-text text-darken-4"><strong>隊員1 :</strong> {{member1}}
+        <a *ngIf="member1id==user.uid || user.uid==partyid || user.manage=='manager'  " class="secondary-content">
+                <i *ngIf=" member1!=''" class="fa fa-trash" (click)="deleteMember(1)"></i>
+        </a></li>
+
+    
+
+    <li class="collection-item red-text text-darken-4"><strong>隊員2 :</strong> {{member2}}
+        <a *ngIf="member2id==user.uid || user.uid==partyid || user.manage=='manager'  " class="secondary-content">
+                <i *ngIf="member2!=''" class="fa fa-trash" (click)="deleteMember(2)"></i>
+        </a></li>
+  
+    <li class="collection-item red-text text-darken-4"><strong>隊員3 :</strong> {{member3}}
+        <a *ngIf="member3id==user.uid || user.uid==partyid || user.manage=='manager'   " class="secondary-content">
+                <i *ngIf="member3!=''" class="fa fa-trash" (click)="deleteMember(3)"></i>
+        </a></li>
+
+</div>

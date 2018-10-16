@@ -1,0 +1,43 @@
+<div *ngIf="partys?.length > 0 ;else notParty">
+   <ul *ngFor="let party of partys" class="collection">
+        <div class="collection" style="font-size:1cm">
+            <li class="collection-item red-text text-darken-4"><strong>狩獵對象 :</strong> {{party.monster}}</li>
+            <li class="collection-item red-text text-darken-4"><strong>隊長 :</strong> {{party.leadername}}</li>
+        </div>
+          <div *ngIf="checkState==true && checkParty==party.leaderid">
+              <app-check></app-check> 
+              <a class="secondary-content">
+                <a *ngIf="user.uid != party.leaderid">
+                <button (click)="joinParty(party.leaderid)" class="btn">Join</button>
+                </a>
+                <button (click)="clearState()" class="btn black">Finish</button>
+                
+              </a> 
+         </div>
+
+         <div class="row">
+        
+           <a *ngIf="checkParty!=party.leaderid " >
+            <button (click)="check(party.leaderid)" class=" btn orange">check</button>
+           
+            <a *ngIf="party.leaderid==user.uid || deleteState==true ">
+               <button (click)="delete(party.leaderid)" class="btn red ">delete</button>
+            </a>
+           </a>
+           
+         </div>
+    </ul>
+    
+</div>
+       
+<ng-template #notParty class="row">
+    <h2 class="col S6 ">沒有隊伍</h2>
+</ng-template>
+
+<div class="row">
+    <div class="input -field col s6 offset-s5">
+        <label style="font-size: 1cm"><strong>新增任務</strong></label>
+        <input type="text" [(ngModel)]="monster" [ngModelOptions]="{standalone:true}" style="font-size: 1cm" placeholder="討伐項目">
+        <button class="btn orange" (click)="createParty(monster)" >Create Party</button>
+    </div>
+</div>

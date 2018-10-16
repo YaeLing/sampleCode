@@ -1,0 +1,85 @@
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>房間資訊</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+    <ion-item><!--商業套房-->
+      <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E5%95%86%E6%A5%AD%E5%A5%97%E6%88%BF.jpg?alt=media&token=4f05f0d8-b539-4781-9aa6-f7d64dc2d4f2"
+        width="400" height="200">
+    <br>
+      <strong>商業套房</strong><br>
+      {{room.BusinessSuite}}
+    </ion-item>
+
+    <ion-item><!--家庭-->
+        <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E5%AE%B6%E5%BA%AD%E5%A5%97%E6%88%BF.jpg?alt=media&token=9d1699c4-4238-468f-ab3e-9009d0a186f2"
+          width="400" height="200">
+    <br>
+      <strong>家庭套房</strong><br>
+      {{room.FamilySuite}}
+    </ion-item>
+
+    <ion-item><!--總統-->
+          <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E7%B8%BD%E7%B5%B1%E5%A5%97%E6%88%BF.jpg?alt=media&token=7720431f-b944-4f7a-805a-ef0e927ea20c"
+            width="400" height="200">
+    <br>
+      <strong>總統套房</strong><br>
+      {{room.PresidentialSuite}}
+    </ion-item>
+
+    <ion-item><!--蜜月-->
+        <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E8%9C%9C%E6%9C%88%E5%A5%97%E6%88%BF.jpg?alt=media&token=279d4da5-7445-4020-a8e9-d1f17ee1f2e7"
+          width="400" height="200">
+    <br>
+      <strong>蜜月套房</strong><br>
+      {{room.HoneymoonSuite}}
+    </ion-item>
+
+    <ion-item><!--豪華-->
+        <img src="https://firebasestorage.googleapis.com/v0/b/hiimbooboochacha.appspot.com/o/%E8%B1%AA%E8%8F%AF%E5%A5%97%E6%88%BF.jpg?alt=media&token=9175fe14-a511-499b-ad20-bcbf3ee8cb54"
+          width="400" height="200">
+    <br>
+      <strong>豪華套房</strong><br>
+      {{room.LuxurySuite}}
+    </ion-item>
+  <div *ngIf="user | async ;let user">
+    <div *ngIf="editState==false; else editRoom">
+      <button ion-button round (click)="edit()">Edit</button>
+    </div>
+    <ng-template #editRoom>
+        <form (ngSubmit)="onSubmit()">
+          <ion-list>
+            <ion-item>
+              <ion-label floating>商業套房</ion-label>
+              <ion-input [(ngModel)]="room.BusinessSuite" name="address"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>家庭套房</ion-label>
+              <ion-input [(ngModel)]="room.FamilySuite" name="phone"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>總統套房</ion-label>
+                <ion-input [(ngModel)]="room.PresidentialSuite" name="email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>蜜月套房</ion-label>
+                <ion-input [(ngModel)]="room.HoneymoonSuite" name="email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>豪華套房</ion-label>
+                <ion-input [(ngModel)]="room.LuxurySuite" name="email"></ion-input>
+            </ion-item>
+           </ion-list>
+          <button ion-button type="submit" round>Edit</button>
+      </form>
+    </ng-template>
+  </div>
+</ion-content>

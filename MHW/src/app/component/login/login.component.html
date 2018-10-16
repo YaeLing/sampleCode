@@ -1,0 +1,29 @@
+<div *ngIf="user | async; let user; else showLogin">
+  <div *ngIf="noob==true ;else succ" class="row">
+      <app-add-account-list></app-add-account-list>
+  </div>
+
+  <ng-template class="row" #succ>
+     <h2 class="col s6 offset-s4"> 登入成功</h2> 
+  </ng-template>
+  </div>
+
+<ng-template #showLogin>
+ <form (ngSubmit)="onSubmit()">
+   <div class="row">
+       <div class="input -field col s6">
+         <input type="text" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone : true}">
+           <label>Email</label>
+       </div>
+       <div class="input -field col s6">
+           <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone :true}">
+                                                          
+           <label>Password</label>
+       </div>
+           <input type="submit" value="Login" class="btn orange" >
+           <a href="#" class="secondary-content">
+           <button class="btn red" (click)="signup(email,password)">signup</button>
+           </a>
+  </div>        
+ </form> 
+</ng-template>

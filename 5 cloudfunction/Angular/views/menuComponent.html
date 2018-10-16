@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a *ngIf="!isLogged" class="navbar-brand" href="#">PaaS 智能市集</a>
+    <a *ngIf="isLogged" class="navbar-brand">
+        <span> {{(account)?.name}} </span>
+        <span> {{(account)?.role == "manager"? "經理": (account)?.role == "staff"? "店員": "顧客"}} </span>
+        <span *ngIf="(account)?.role == 'customer'"> {{"餘額 : " + (account)?.balance}}</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto justify-content-center container-fluid">
+            <li class="nav-item">
+                <button type="button" routerLink="/products" routerLinkActive="active" class="btn btn-info">商品管理</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" routerLink="/qrcode" routerLinkActive="active" class="btn btn-info">官方帳號</button>
+            </li>
+            <li class="nav-item">
+                <button *ngIf="isLogged" type="button" routerLink="/accounts" routerLinkActive="active" class="btn btn-info">帳戶管理</button>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <div class="form-inline my-2 my-lg-0">
+                <button *ngIf="!isLogged" type="button" routerLink="/login" routerLinkActive="active" class="btn btn-success my-2 my-sm-0">登入</button>
+                <button *ngIf="isLogged" (click)="singOut()" class="btn btn-light my-2 my-sm-0">登出</button>
+            </div>
+        </form>
+    </div>
+</nav>

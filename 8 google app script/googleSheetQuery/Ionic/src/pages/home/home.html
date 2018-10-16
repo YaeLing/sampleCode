@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="studentState==false ; else show">
+    <form (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>學號</ion-label>
+          <ion-input type="text" [(ngModel)]="student.id" name="id"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>姓名</ion-label>
+          <ion-input type="text" [(ngModel)]="student.name" name="name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>電話</ion-label>
+          <ion-input type="text" [(ngModel)]="student.phone" name="phone"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="text" [(ngModel)]="student.email" name="email"></ion-input>
+        </ion-item>
+        <button ion-button round type="submit">Submit</button>
+      </ion-list>
+    </form>
+  </div>
+  <ng-template #show>
+    <ion-list>
+      <ion-item>
+        學號 : {{student.id}}
+      </ion-item>
+      <ion-item>
+        姓名 : {{student.name}}
+      </ion-item>
+      <ion-item>
+        電話 : {{student.phone}}
+      </ion-item>
+      <ion-item>
+        Email : {{student.email}}
+      </ion-item>
+      <button ion-button round (click)="check()">送出</button>
+      <button ion-button round (click)="edit()">編輯</button>
+    </ion-list>
+  </ng-template>
+</ion-content>
